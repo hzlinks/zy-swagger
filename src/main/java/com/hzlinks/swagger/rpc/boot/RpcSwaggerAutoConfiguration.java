@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @program: bw-swagger
+ * @program: rpc-swagger
  * @description: SpringAutoConfiguration
  * @author: feiyang
  * @create: 2021/03/02 15:09
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
         , DubboHttpController.class, SwaggerDubboController.class
 })
 @EnableConfigurationProperties(RpcSwaggerProperties.class)
-@ComponentScan({"com.bluewhale.swagger"})
+@ComponentScan({"com.hzlinks.swagger"})
 public class RpcSwaggerAutoConfiguration {
 
 }
