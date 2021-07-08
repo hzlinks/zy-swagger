@@ -19,10 +19,14 @@ rpc swagger-ui spring boot starter项目
 
 
         swaggerpc
-        ├── jar
-        │   ├── version: 1.0.1-SNAPSHOT
-        │   ├── groupId: com.hzlinks.xxxx
-        │───├── artifactId: xxxx-client
+        
+            jar
+       
+                version: 1.0.1-SNAPSHOT
+       
+                groupId: com.hzlinks.xxxx
+    
+                artifactId: xxxx-client
 
 
    3. 打开 http://{host}/context/rpc/index.html    即可
