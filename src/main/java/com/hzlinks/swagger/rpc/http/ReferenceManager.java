@@ -1,0 +1,108 @@
+package com.hzlinks.swagger.rpc.http;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.spring.ServiceBean;
+import org.apache.dubbo.config.spring.extension.SpringExtensionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+
+public class ReferenceManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReferenceManager.class);
+
+    @SuppressWarnings("rawtypes")
+    private static Collection<ServiceBean> services;
+
+    private static final Map<Class<?>, Object> interfaceMapProxy = new ConcurrentHashMap<Class<?>, Object>();
+    private static final Map<Class<?>, Object> interfaceMapRef = new ConcurrentHashMap<Class<?>, Object>();
+
+    private static ReferenceManager instance;
+    private static ApplicationConfig application;
+
+    private ReferenceManager() {
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public synchronized static ReferenceManager getInstance() {
+        if (null != instance) {
+            return instance;
+        }
+        instance = new ReferenceManager();
+        services = new HashSet<ServiceBean>();
+        try {
+            Set<ApplicationContext> contexts = SpringExtensionFactory.getContexts();
+            for (ApplicationContext context : contexts) {
+                services.addAll(context.getBeansOfType(ServiceBean.class).values());
+            }
+        } catch (Exception e) {
+            logger.error("Get All Dubbo Service Error", e);
+            return instance;
+        }
+        for (ServiceBean<?> bean : services) {
+            interfaceMapRef.putIfAbsent(bean.getInterfaceClass(), bean.getRef());
+        }
+
+        //
+        if (!services.isEmpty()) {
+            ServiceBean<?> bean = services.toArray(new ServiceBean[]{})[0];
+            application = bean.getApplication();
+        }
+
+        return instance;
+    }
+
+    public Object getProxy(String interfaceClass) {
+        Set<Entry<Class<?>, Object>> entrySet = interfaceMapProxy.entrySet();
+        for (Entry<Class<?>, Object> entry : entrySet) {
+            if (entry.getKey().getName().equals(interfaceClass)) {
+                return entry.getValue();
+            }
+        }
+
+        for (ServiceBean<?> service : services) {
+            if (interfaceClass.equals(service.getInterfaceClass().getName())) {
+                ReferenceConfig<Object> reference = new ReferenceConfig<Object>();
+                reference.setApplication(service.getApplication());
+                reference.setRegistry(service.getRegistry());
+                reference.setRegistries(service.getRegistries());
+                reference.setInterface(service.getInterfaceClass());
+                reference.setVersion(service.getVersion());
+                interfaceMapProxy.put(service.getInterfaceClass(), reference.get());
+                return reference.get();
+            }
+        }
+        return null;
+    }
+
+    public Entry<Class<?>, Object> getRef(String interfaceClass) {
+        Set<Entry<Class<?>, Object>> entrySet = interfaceMapRef.entrySet();
+        for (Entry<Class<?>, Object> entry : entrySet) {
+            if (entry.getKey().getName().equals(interfaceClass)) {
+                return entry;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Collection<ServiceBean> getServices() {
+        return services;
+    }
+
+    public ApplicationConfig getApplication() {
+        return application;
+    }
+
+    public Map<Class<?>, Object> getInterfaceMapRef() {
+        return interfaceMapRef;
+    }
+
+}
