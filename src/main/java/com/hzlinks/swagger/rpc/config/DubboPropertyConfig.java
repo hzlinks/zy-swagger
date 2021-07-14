@@ -35,7 +35,7 @@ public class DubboPropertyConfig implements SwaggerConfig {
     @Override
     public Swagger configure(Swagger swagger) {
         ApplicationConfig application = ReferenceManager.getInstance().getApplication();
-        if (null != application) {
+        if (null != application && rpcSwaggerProperties.getEnable()) {
             Info info = swagger.getInfo();
             if (info == null) {
                 info = new Info();

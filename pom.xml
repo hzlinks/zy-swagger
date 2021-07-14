@@ -6,13 +6,13 @@
     <parent>
         <groupId>com.hzlinks</groupId>
         <artifactId>hzlinks</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.7-SNAPSHOT</version>
     </parent>
 
     <groupId>com.hzlinks.swagger</groupId>
     <artifactId>swaggerpc-springboot-starter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.5</version>
+    <version>1.0.7-SNAPSHOT</version>
     <name>swagger-rpc</name>
     <description>swagger for dubbo rpc with spring boot</description>
 
