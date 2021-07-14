@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @create: 2021/03/02 17:04
  */
 @Data
-@ConfigurationProperties(prefix = "swaggerpc.jar")
+@ConfigurationProperties(prefix = "swaggerpc.config")
 public class RpcSwaggerProperties {
 
     private String version;
@@ -18,5 +18,7 @@ public class RpcSwaggerProperties {
     private String groupId;
 
     private String artifactId;
+
+    private Boolean enable;
 
 }

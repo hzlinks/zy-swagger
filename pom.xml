@@ -6,13 +6,13 @@
     <parent>
         <groupId>com.hzlinks</groupId>
         <artifactId>hzlinks</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.7</version>
     </parent>
 
     <groupId>com.hzlinks.swagger</groupId>
     <artifactId>swaggerpc-springboot-starter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
     <name>swagger-rpc</name>
     <description>swagger for dubbo rpc with spring boot</description>
 
@@ -121,47 +121,7 @@
 
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox.version}</version>
-            <exclusions>
-            <exclusion>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-            </exclusion>
-                <exclusion>
-                    <groupId>io.springfox</groupId>
-                    <artifactId>springfox-swagger-ui</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-common</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-spring-integration</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-spring-webmvc</artifactId>
             <version>${springfox.version}</version>
         </dependency>
 
@@ -180,7 +140,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
-            <version>${swagger.version}</version>
+<!--            <version>${swagger.version}</version>-->
         </dependency>
 
         <dependency>
